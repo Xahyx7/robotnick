@@ -168,36 +168,34 @@ body {
 .product-showcase {
     padding: 4rem 2rem;
     position: relative;
-    min-height: 520px;
+    min-height: 600px;
 }
 
 .showcase-container {
-    max-width: 650px;
+    max-width: 1200px;
     margin: 0 auto;
     position: relative;
     min-height: 500px;
 }
 
-/* Product displays overlap in position for in-place rotation */
 .product-display {
-    width: 100%;
-    position: absolute; /* Overlay all on one spot */
+    position: absolute;
     top: 0;
     left: 0;
+    width: 100%;
     opacity: 0;
-    transition: opacity 0.5s;
+    transition: opacity 0.5s ease-in-out;
     pointer-events: none;
     z-index: 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: center;
-    padding-bottom: 3rem;
 }
+
 .product-display.active {
-    opacity: 1 !important;
+    opacity: 1;
     pointer-events: auto;
-    position: relative;
     z-index: 1;
 }
 
@@ -214,48 +212,228 @@ body {
     animation: rotate3D 8s linear infinite;
 }
 
-/* 3D Model Styles ... (same as previous CSS; unchanged) */
-
 /* Robotic Hand 3D Model */
-.robotic-hand-model { ... }
-.hand-palm { ... }
-.finger { ... }
-.finger-1 { ... }
-.finger-2 { ... }
-.finger-3 { ... }
-.finger-4 { ... }
-.thumb { ... }
-.wrist { ... }
+.robotic-hand-model {
+    position: relative;
+    width: 120px;
+    height: 200px;
+    transform-style: preserve-3d;
+}
+
+.hand-palm {
+    width: 80px;
+    height: 100px;
+    background: linear-gradient(45deg, #333, #666);
+    border-radius: 10px;
+    position: absolute;
+    top: 50px;
+    left: 20px;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.finger {
+    width: 12px;
+    height: 40px;
+    background: linear-gradient(45deg, #444, #777);
+    border-radius: 6px;
+    position: absolute;
+    animation: fingerMove 3s ease-in-out infinite;
+}
+
+.finger-1 { top: 10px; left: 25px; animation-delay: 0s; }
+.finger-2 { top: 5px; left: 40px; animation-delay: 0.2s; }
+.finger-3 { top: 8px; left: 55px; animation-delay: 0.4s; }
+.finger-4 { top: 15px; left: 70px; animation-delay: 0.6s; }
+
+.thumb {
+    width: 15px;
+    height: 35px;
+    background: linear-gradient(45deg, #444, #777);
+    border-radius: 8px;
+    position: absolute;
+    top: 70px;
+    left: 5px;
+    transform: rotate(-30deg);
+    animation: thumbMove 3s ease-in-out infinite;
+}
+
+.wrist {
+    width: 60px;
+    height: 40px;
+    background: linear-gradient(45deg, #222, #555);
+    border-radius: 5px;
+    position: absolute;
+    top: 150px;
+    left: 30px;
+}
 
 /* Robotic Pet 3D Model */
-.robotic-pet-model { ... }
-.pet-body { ... }
-.pet-head { ... }
-.pet-ears { ... }
-.ear-left, .ear-right { ... }
-.pet-legs { ... }
-.leg { ... }
-.leg-1 { ... }
-.leg-2 { ... }
-.leg-3 { ... }
-.leg-4 { ... }
-.pet-tail { ... }
+.robotic-pet-model {
+    position: relative;
+    width: 150px;
+    height: 100px;
+    transform-style: preserve-3d;
+}
+
+.pet-body {
+    width: 100px;
+    height: 60px;
+    background: linear-gradient(45deg, #4a90e2, #7bb3f0);
+    border-radius: 30px;
+    position: absolute;
+    top: 20px;
+    left: 25px;
+    box-shadow: 0 0 20px rgba(74, 144, 226, 0.4);
+}
+
+.pet-head {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(45deg, #4a90e2, #7bb3f0);
+    border-radius: 25px;
+    position: absolute;
+    top: 5px;
+    left: 50px;
+    animation: headBob 2s ease-in-out infinite;
+}
+
+.pet-ears {
+    position: absolute;
+    top: 0;
+    left: 45px;
+}
+
+.ear-left, .ear-right {
+    width: 15px;
+    height: 20px;
+    background: linear-gradient(45deg, #357abd, #4a90e2);
+    border-radius: 8px;
+    position: absolute;
+    animation: earFlick 3s ease-in-out infinite;
+}
+
+.ear-left { left: 5px; transform: rotate(-20deg); }
+.ear-right { right: 5px; transform: rotate(20deg); animation-delay: 0.5s; }
+
+.pet-legs {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.leg {
+    width: 12px;
+    height: 25px;
+    background: linear-gradient(45deg, #357abd, #4a90e2);
+    border-radius: 6px;
+    position: absolute;
+    animation: legMove 1.5s ease-in-out infinite;
+}
+
+.leg-1 { left: 30px; animation-delay: 0s; }
+.leg-2 { left: 50px; animation-delay: 0.3s; }
+.leg-3 { left: 70px; animation-delay: 0.6s; }
+.leg-4 { left: 90px; animation-delay: 0.9s; }
+
+.pet-tail {
+    width: 8px;
+    height: 30px;
+    background: linear-gradient(45deg, #357abd, #4a90e2);
+    border-radius: 4px;
+    position: absolute;
+    top: 25px;
+    right: 0;
+    transform-origin: top;
+    animation: tailWag 1s ease-in-out infinite;
+}
 
 /* Robotic Caretaker 3D Model */
-.robotic-caretaker-model { ... }
-.caretaker-base { ... }
-.caretaker-body { ... }
-.caretaker-head { ... }
-.caretaker-screen { ... }
-.caretaker-arms { ... }
-.arm { ... }
-.arm-left { ... }
-.arm-right { ... }
-.caretaker-sensors { ... }
-.sensor { ... }
-.sensor-1 { ... }
-.sensor-2 { ... }
-.sensor-3 { ... }
+.robotic-caretaker-model {
+    position: relative;
+    width: 120px;
+    height: 200px;
+    transform-style: preserve-3d;
+}
+
+.caretaker-base {
+    width: 80px;
+    height: 40px;
+    background: linear-gradient(45deg, #2c3e50, #34495e);
+    border-radius: 20px;
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+    box-shadow: 0 0 20px rgba(52, 73, 94, 0.4);
+}
+
+.caretaker-body {
+    width: 60px;
+    height: 100px;
+    background: linear-gradient(45deg, #34495e, #5d6d7e);
+    border-radius: 15px;
+    position: absolute;
+    bottom: 40px;
+    left: 30px;
+}
+
+.caretaker-head {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(45deg, #5d6d7e, #85929e);
+    border-radius: 25px;
+    position: absolute;
+    top: 10px;
+    left: 35px;
+    animation: headScan 4s ease-in-out infinite;
+}
+
+.caretaker-screen {
+    width: 30px;
+    height: 20px;
+    background: linear-gradient(45deg, #00d4ff, #0099cc);
+    border-radius: 5px;
+    position: absolute;
+    top: 25px;
+    left: 45px;
+    animation: screenFlicker 2s ease-in-out infinite;
+}
+
+.caretaker-arms {
+    position: absolute;
+    top: 80px;
+    width: 100%;
+}
+
+.arm {
+    width: 8px;
+    height: 40px;
+    background: linear-gradient(45deg, #34495e, #5d6d7e);
+    border-radius: 4px;
+    position: absolute;
+    animation: armMove 3s ease-in-out infinite;
+}
+
+.arm-left { left: 20px; transform-origin: top; animation-delay: 0s; }
+.arm-right { right: 20px; transform-origin: top; animation-delay: 1.5s; }
+
+.caretaker-sensors {
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.sensor {
+    width: 6px;
+    height: 6px;
+    background: #ff6b6b;
+    border-radius: 50%;
+    position: absolute;
+    animation: sensorBlink 1s ease-in-out infinite;
+}
+
+.sensor-1 { top: 30px; left: 20px; animation-delay: 0s; }
+.sensor-2 { top: 25px; right: 20px; animation-delay: 0.3s; }
+.sensor-3 { top: 35px; left: 50%; animation-delay: 0.6s; }
 
 /* Product Info Styles */
 .product-info {
@@ -293,43 +471,198 @@ body {
     font-weight: bold;
 }
 
-/* Typewriter Effect */
-.typewriter {
-    overflow: hidden;
-    white-space: nowrap;
-    width: 0;
-    animation: none;
-    display: inline-block;
+/* Product Gallery Styles */
+.product-gallery {
+    padding: 4rem 2rem;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.3);
 }
 
-.typewriter.typing {
-    animation: typewriter 1.5s steps(28, end) forwards;
+.product-gallery h2 {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: #00d4ff;
 }
 
-/* Product Gallery Styles ... (unchanged, remains at bottom) */
+.gallery-container {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
 
-/* Animations ... (keep old @keyframes and add as needed) */
-@keyframes introFadeOut { to { opacity: 0; visibility: hidden; } }
-@keyframes symbolFadeIn { from{ opacity:0; transform:scale(0.5);} to{opacity:1;transform:scale(1);} }
-@keyframes symbolNormal { to { text-shadow: none; color: #ffffff; } }
-@keyframes neonGlow { 0%,100%{opacity:0.3;box-shadow:0 0 5px #00d4ff;} 50%{opacity:1;box-shadow:0 0 20px #00d4ff,0 0 30px #00d4ff;} }
-@keyframes mainFadeIn { from { opacity:0; transform:translateY(30px);} to{opacity: 1; transform:translateY(0);} }
-@keyframes rotate3D { from{ transform:rotateY(0deg) rotateX(0deg);} to{ transform:rotateY(360deg) rotateX(15deg);} }
-/* ...add the rest from previous CSS if missing... */
+.gallery-item {
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    backdrop-filter: blur(10px);
+    border: 2px solid transparent;
+}
 
-/* Responsive design (same as before) */
+.gallery-item:hover,
+.gallery-item.active {
+    transform: scale(1.1);
+    border-color: #00d4ff;
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+}
+
+.mini-model {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    animation: miniRotate 4s linear infinite;
+}
+
+.robotic-hand-mini {
+    background: linear-gradient(45deg, #333, #666);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+}
+
+.robotic-pet-mini {
+    background: linear-gradient(45deg, #4a90e2, #7bb3f0);
+    box-shadow: 0 0 15px rgba(74, 144, 226, 0.4);
+}
+
+.robotic-caretaker-mini {
+    background: linear-gradient(45deg, #34495e, #5d6d7e);
+    box-shadow: 0 0 15px rgba(52, 73, 94, 0.4);
+}
+
+/* Animations */
+@keyframes introFadeOut {
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+@keyframes symbolFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes symbolNormal {
+    to {
+        text-shadow: none;
+        color: #ffffff;
+    }
+}
+
+@keyframes neonGlow {
+    0%, 100% {
+        opacity: 0.3;
+        box-shadow: 0 0 5px #00d4ff;
+    }
+    50% {
+        opacity: 1;
+        box-shadow: 0 0 20px #00d4ff, 0 0 30px #00d4ff;
+    }
+}
+
+@keyframes mainFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes rotate3D {
+    from {
+        transform: rotateY(0deg) rotateX(0deg);
+    }
+    to {
+        transform: rotateY(360deg) rotateX(15deg);
+    }
+}
+
+@keyframes fingerMove {
+    0%, 100% { transform: rotateX(0deg); }
+    50% { transform: rotateX(-20deg); }
+}
+
+@keyframes thumbMove {
+    0%, 100% { transform: rotate(-30deg); }
+    50% { transform: rotate(-50deg); }
+}
+
+@keyframes headBob {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+}
+
+@keyframes earFlick {
+    0%, 90%, 100% { transform: rotate(-20deg); }
+    5%, 15% { transform: rotate(-40deg); }
+}
+
+@keyframes legMove {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+@keyframes tailWag {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(15deg); }
+    75% { transform: rotate(-15deg); }
+}
+
+@keyframes headScan {
+    0%, 100% { transform: rotateY(0deg); }
+    25% { transform: rotateY(-30deg); }
+    75% { transform: rotateY(30deg); }
+}
+
+@keyframes screenFlicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+@keyframes armMove {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(20deg); }
+}
+
+@keyframes sensorBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+@keyframes miniRotate {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
     .product-display {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
-    .showcase-container {
-        min-height: 800px;
-    }
+    
     .gallery-container {
         flex-direction: column;
         align-items: center;
     }
+    
     .hero-title {
         font-size: 2rem;
     }
