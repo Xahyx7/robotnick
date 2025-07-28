@@ -1,4 +1,4 @@
-// --- PRODUCT DATA ---
+// Product data
 const productData = [
   {
     id: 'robotic-hand',
@@ -38,11 +38,11 @@ const productData = [
   }
 ];
 
-// --- TYPEWRITER EFFECT ---
+// Typewriter effect function
 function typeText(element, text, speed, callback) {
   element.textContent = '';
-  element.style.width = 'auto';
   let i = 0;
+  
   function type() {
     if (i < text.length) {
       element.textContent += text.charAt(i);
@@ -55,92 +55,145 @@ function typeText(element, text, speed, callback) {
   type();
 }
 
-// --- SHOWCASE LOOP ---
+// Product showcase variables
 let activeIndex = 0;
-let loopTimer = null;
+let showcaseInterval;
 
+// Initialize showcase loop
 function setupShowcaseLoop() {
-  // Place all products at same spot (CSS does this), hide all but one.
   const displays = productData.map(p => document.getElementById(p.id));
-  function hideAll() {
+  
+  function hideAllProducts() {
     displays.forEach(el => {
       el.classList.remove('active');
-      // Reset typewriter text
+      // Clear all text
       el.querySelectorAll('.product-title, .product-model, .feature, .product-price').forEach(field => {
         field.textContent = '';
-        field.classList.remove('typing');
       });
     });
   }
 
-  function showAndAnimate(index) {
-    hideAll();
-    const p = productData[index];
-    const el = document.getElementById(p.id);
-    el.classList.add('active');
+  function showAndAnimateProduct(index) {
+    hideAllProducts();
+    
+    const product = productData[index];
+    const element = document.getElementById(product.id);
+    element.classList.add('active');
 
-    // Start typewriter animation for title, model, features, price
-    const titleEl = el.querySelector('.product-title');
-    const modelEl = el.querySelector('.product-model');
-    const featureEls = el.querySelectorAll('.feature');
-    const priceEl = el.querySelector('.product-price');
+    // Get elements for typewriter animation
+    const titleEl = element.querySelector('.product-title');
+    const modelEl = element.querySelector('.product-model');
+    const featureEls = element.querySelectorAll('.feature');
+    const priceEl = element.querySelector('.product-price');
 
-    // Animate typing step by step
-    typeText(titleEl, p.title, 60, () => {
-      typeText(modelEl, p.model, 40, () => {
-        // Features, one after another
-        function featureWriter(i) {
-          if (i>=p.features.length) {
-            // Now type price
-            setTimeout(() => {
-              typeText(priceEl, p.price, 40);
-            }, 350);
-            return;
-          }
-          typeText(featureEls[i], "• "+p.features[i], 25, () => {
-            setTimeout(()=>featureWriter(i+1), 270);
-          });
-        }
-        featureWriter(0);
-      });
+    // Start typewriter sequence
+    typeText(titleEl, product.title, 80, () => {
+      setTimeout(() => {
+        typeText(modelEl, product.model, 60, () => {
+          setTimeout(() => {
+            animateFeatures(0);
+          }, 300);
+        });
+      }, 200);
     });
+
+    function animateFeatures(featureIndex) {
+      if (featureIndex < product.features.length) {
+        typeText(featureEls[featureIndex], `• ${product.features[featureIndex]}`, 40, () => {
+          setTimeout(() => {
+            animateFeatures(featureIndex + 1);
+          }, 400);
+        });
+      } else {
+        setTimeout(() => {
+          typeText(priceEl, product.price, 70);
+        }, 500);
+      }
+    }
   }
 
-  function loop() {
-    showAndAnimate(activeIndex);
-    // Next index (cycle)
-    activeIndex = (activeIndex+1)%productData.length;
-    loopTimer = setTimeout(loop, 8000); // 8 seconds per product
+  function nextProduct() {
+    showAndAnimateProduct(activeIndex);
+    activeIndex = (activeIndex + 1) % productData.length;
   }
 
-  // Start on load
-  loop();
+  // Start the loop
+  nextProduct();
+  showcaseInterval = setInterval(nextProduct, 10000); // 10 seconds per product
 }
 
-// --- INTRO SEQUENCE HANDLER ---
-document.addEventListener('DOMContentLoaded', function() {
-  setTimeout(() => {
-    // After intro, hide screen and start main content
-    document.getElementById('intro-screen').style.display = 'none';
-    document.getElementById('main-content').classList.remove('hidden');
-    // Start showcase product loop
-    setupShowcaseLoop();
-    // (You can also start the gallery loop below if you wish)
-  }, 5000); // Adjust to match your intro animation length
-});
+// Gallery loop functionality
+function startGalleryLoop() {
+  const galleryItems = document.querySelectorAll('.gallery-item');
+  let galleryActiveIndex = 0;
+  
+  function rotateGallery() {
+    // Remove active class from all items
+    galleryItems.forEach(item => item.classList.remove('active'));
+    
+    // Add active class to current item with animation
+    galleryItems[galleryActiveIndex].classList.add('active');
+    
+    // Move to next item
+    galleryActiveIndex = (galleryActiveIndex + 1) % galleryItems.length;
+  }
+  
+  // Start gallery rotation
+  setInterval(rotateGallery, 3000); // Change every 3 seconds
+}
 
-// (Optional) Smooth scroll and gallery code stays the same
+// Gallery item click handlers
+function setupGalleryInteraction() {
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('.gallery-item')) {
+      const item = e.target.closest('.gallery-item');
+      
+      // Add special click effect
+      item.style.transform = 'scale(1.2) rotateY(360deg)';
+      item.style.transition = 'all 0.8s ease';
+      
+      setTimeout(() => {
+        item.style.transform = 'scale(1.1)';
+      }, 800);
+    }
+  });
+}
 
 // Smooth scrolling for navigation
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+function setupSmoothScrolling() {
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
     });
+  });
+}
+
+// Initialize everything when page loads
+document.addEventListener('DOMContentLoaded', function() {
+  // Start intro sequence
+  setTimeout(() => {
+    // Hide intro screen
+    document.getElementById('intro-screen').style.display = 'none';
+    document.getElementById('main-content').classList.remove('hidden');
+    
+    // Start main showcase loop
+    setupShowcaseLoop();
+    
+    // Start gallery animations
+    setTimeout(() => {
+      startGalleryLoop();
+    }, 2000);
+    
+    // Setup interactions
+    setupGalleryInteraction();
+    setupSmoothScrolling();
+    
+  }, 5000); // After 5 second intro
 });
